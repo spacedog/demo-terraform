@@ -6,8 +6,6 @@ on:
     types:
       - opened
       - reopened
-    branches:
-      - 'feature/**'
 
 jobs:
   check_pr:
