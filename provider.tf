@@ -9,3 +9,5 @@ terraform {
 
 # Use  GITHUB_TOKEN environment variable to authenticate
 provider "github" {}
+
+provider "random" {}
