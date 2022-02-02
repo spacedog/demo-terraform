@@ -1,5 +1,5 @@
 ---
-name: Build terraform plan for pull request
+name: Check PR
 
 on:
   pull_request:
@@ -10,8 +10,7 @@ on:
       - feature/*
 
 jobs:
-
-  terraform_plan:
+  check_pr:
     runs-on: ubuntu-latest
     environment: development
     defaults:
