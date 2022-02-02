@@ -7,62 +7,64 @@ on:
       - opened
       - reopened
     branches:
-      - master
-      - staging
-      - development
+      - feature/*
 
-defaults:
-  run:
-    working-directory: ${{ env.tf_actions_working_dir }}
+jobs:
 
-steps:
-- uses: actions/checkout@v2
-- uses: hashicorp/setup-terraform@v1
-  with:
-    terraform_version: 1.0.3
+  terraform_plan:
+    runs-on: ubuntu-latest
+    environment: development
+    defaults:
+      run:
+        working-directory: ${{ env.tf_actions_working_dir }}
+    steps:
+      - uses: actions/checkout@v2
 
-- name: Terraform fmt
-  id: fmt
-  run: terraform fmt -check
-  continue-on-error: true
+      - uses: hashicorp/setup-terraform@v1
+        with:
+            terraform_version: 1.0.3
 
-- name: Terraform Init
-  id: init
-  run: terraform init
+      - name: Terraform fmt
+        id: fmt
+        run: terraform fmt -check
+        continue-on-error: true
 
-- name: Terraform Validate
-  id: validate
-  run: terraform validate -no-color
+      - name: Terraform Init
+        id: init
+        run: terraform init
 
-- name: Terraform Plan
-  id: plan
-  run: terraform plan -no-color
-  continue-on-error: true
+      - name: Terraform Validate
+        id: validate
+        run: terraform validate -no-color
 
-- uses: actions/github-script@0.9.0
-  if: github.event_name == 'pull_request'
-  env:
-    PLAN: "terraform\n${{ steps.plan.outputs.stdout }}"
-  with:
-    script: |
-      const output = `#### Terraform Format and Style 🖌\`${{ steps.fmt.outcome }}\`
-      #### Terraform Initialization ⚙️\`${{ steps.init.outcome }}\`
-      #### Terraform Validation 🤖\`${{ steps.validate.outputs.stdout }}\`
-      #### Terraform Plan 📖\`${{ steps.plan.outcome }}\`
+      - name: Terraform Plan
+        id: plan
+        run: terraform plan -no-color
+        continue-on-error: true
 
-      <details><summary>Show Plan</summary>
+      - uses: actions/github-script@0.9.0
+        env:
+          PLAN: "terraform\n${{ steps.plan.outputs.stdout }}"
+          with:
+          script: |
+            const output = `#### Terraform Format and Style 🖌\`${{ steps.fmt.outcome }}\`
+            #### Terraform Initialization ⚙️\`${{ steps.init.outcome }}\`
+            #### Terraform Validation 🤖\`${{ steps.validate.outputs.stdout }}\`
+            #### Terraform Plan 📖\`${{ steps.plan.outcome }}\`
 
-      \`\`\`\n
-      ${process.env.PLAN}
-      \`\`\`
+            <details><summary>Show Plan</summary>
 
-      </details>
+            \`\`\`\n
+            ${process.env.PLAN}
+            \`\`\`
 
-      *Pusher: @${{ github.actor }}, Action: \`${{ github.event_name }}\`, Working Directory: \`${{ env.tf_actions_working_dir }}\`, Workflow: \`${{ github.workflow }}\`*`;
+            </details>
 
-      github.issues.createComment({
-        issue_number: context.issue.number,
-        owner: context.repo.owner,
-        repo: context.repo.repo,
-        body: output
-      })
+            *Pusher: @${{ github.actor }}, Action: \`${{ github.event_name }}\`, Working Directory: \`${{ env.tf_actions_working_dir }}\`, Workflow: \`${{ github.workflow }}\`*`;
+
+            github.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: output
+            })
