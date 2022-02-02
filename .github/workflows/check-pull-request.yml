@@ -7,7 +7,9 @@ on:
       - opened
       - reopened
     branches:
-      - feature/*
+      - 'feature/**'
+    paths:
+      - '**.tf'
 
 jobs:
   check_pr:
