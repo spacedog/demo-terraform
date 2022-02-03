@@ -1,4 +1,4 @@
 resource "random_string" "random-string" {
-  lenght = 22
+  length = 22
   special = false
 }
