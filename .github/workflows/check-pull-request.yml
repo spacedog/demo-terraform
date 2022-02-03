@@ -22,33 +22,13 @@ jobs:
     runs-on: ubuntu-latest
     environment: development
     steps:
-      - uses: actions/checkout@v2
-
-      - uses: hashicorp/setup-terraform@v1
+      - uses: ./.github/workflows/terraform-plan.yml
         with:
-            terraform_version: ${{ env.terraform_version }}
-
-      - name: Terraform fmt
-        id: fmt
-        run: terraform fmt -check
-        continue-on-error: true
-
-      - name: Terraform Init
-        id: init
-        run: terraform init
-
-      - name: Terraform Validate
-        id: validate
-        run: terraform validate
-
-      - name: Terraform Plan
-        id: plan
-        run: terraform plan
-        continue-on-error: true
+          terraform_version: ${{ env.terraform_version }}
 
       - uses: actions/github-script@v5
         env:
-          PLAN: "${{ steps.plan.outputs.stdout }}"
+          PLAN: "${{ steps.terraform_plan.outputs.stdout }}"
         with:
           script: |
             const output = `

@@ -1,0 +1,26 @@
+---
+name: Merge ot master
+
+on:
+  push:
+    branches:
+      - master
+
+env:
+  # Version of Terraform to use
+  terraform_version: latest
+  # Terraform environment variables
+  TF_CLI_ARGS_init: "-get=true -upgrade=true -input=false -no-color"
+  TF_CLI_ARGS_plan: "-input=false -no-color"
+  TF_CLI_ARGS_apply: "-input=false -no-color"
+  TF_IN_AUTOMATION: true
+
+
+jobs:
+  terraform_plan:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: ./.github/workflows/terraform-plan.yml
+        with:
+          terraform_version: ${{ env.terraform_version }}
+
