@@ -54,7 +54,7 @@ jobs:
             const output = `
             \`\`\`\n
               ${process.env.PLAN}
-            \`\`\'
+            \`\`\`
             `
 
             github.rest.issues.createComment({
