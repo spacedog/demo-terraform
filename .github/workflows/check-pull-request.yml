@@ -2,13 +2,11 @@
 name: Check PR
 
 on:
-  push:
-    branches:
-      - 'feature/**'
   pull_request:
     types:
       - opened
       - reopened
+      - edited
 
 jobs:
   check_pr:
