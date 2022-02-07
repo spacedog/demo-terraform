@@ -14,7 +14,7 @@ on:
         default: development
       post_comment:
         required: false
-        type: bool
+        type: boolean
         default: false
     outputs:
       description: Terraform Plan
