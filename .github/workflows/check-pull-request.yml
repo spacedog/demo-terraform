@@ -8,13 +8,6 @@ on:
       - reopened
       - synchronize
 
-env:
-  # Terraform environment variables
-  TF_CLI_ARGS_init: "-get=true -upgrade=true -input=false -no-color"
-  TF_CLI_ARGS_plan: "-input=false -no-color"
-  TF_CLI_ARGS_apply: "-input=false -no-color"
-  TF_IN_AUTOMATION: true
-
 jobs:
   check-pull-request:
     uses: spacedog/demo-terraform/.github/workflows/terraform-plan.yml@61350ba56dac2ab975882e12fec32b8ff595c0f6
