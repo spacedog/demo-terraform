@@ -19,6 +19,5 @@ jobs:
     uses: spacedog/github-workflows/.github/workflows/terraform-deploy.yml@main
     needs: terraform_plan_dev
     with:
-      post_comment: false
       environment: development
       terraform_version: latest
