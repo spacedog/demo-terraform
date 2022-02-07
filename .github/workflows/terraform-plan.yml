@@ -19,10 +19,11 @@ on:
     outputs:
       terraform_plan:
         description: Terraform Plan
-        value: ${{ jobs.terraform_plan.outputs.terraform_plan }}
+        value: ${{ jobs.plan.outputs.terraform_plan }}
 
 jobs:
   terraform-plan:
+    name: Terraform
     runs-on: ubuntu-latest
     environment: ${{ inputs.environment }}
     outputs:
@@ -53,7 +54,7 @@ jobs:
         continue-on-error: true
 
       - uses: actions/github-script@v5
-        if: ${{ inputs.post_comment }} == true
+        if: ${{ inputs.post_comment == true }}
         env:
           PLAN: "${{ steps.plan.outputs.stdout }}"
         with:
