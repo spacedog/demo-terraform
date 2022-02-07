@@ -17,7 +17,7 @@ env:
 
 jobs:
   check-pull-request:
-    uses: .github/workflows/terraform-plan.yml
+    uses: .github/workflows/terraform-plan.yml@b7fcb0d0587a39db2701b55509a9db4d5399dde1
     with:
       post_comment: true
       environment: development
