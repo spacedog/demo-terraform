@@ -10,7 +10,7 @@ on:
 
 jobs:
   check-pull-request:
-    uses: spacedog/github-workflows/terraform/terraform-plan.yml@main
+    uses: spacedog/github-workflows/.github/workflows/terraform-plan.yml@main
     with:
       post_comment: true
       environment: development

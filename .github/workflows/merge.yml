@@ -8,7 +8,7 @@ on:
 
 jobs:
   terraform_plan:
-    uses: spacedog/github-workflows/terraform/terraform-plan.yml@main
+    uses: spacedog/github-workflows/.github/workflows/terraform-plan.yml@main
     with:
       post_comment: false
       environment: development
