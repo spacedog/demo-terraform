@@ -9,8 +9,6 @@ on:
       - synchronize
 
 env:
-  # Version of Terraform to use
-  terraform_version: latest
   # Terraform environment variables
   TF_CLI_ARGS_init: "-get=true -upgrade=true -input=false -no-color"
   TF_CLI_ARGS_plan: "-input=false -no-color"
@@ -19,27 +17,8 @@ env:
 
 jobs:
   check-pull-request:
-    runs-on: ubuntu-latest
-    environment: development
-    steps:
-      - uses: ./.github/workflows/terraform-plan.yml
-        with:
-          terraform_version: ${{ env.terraform_version }}
-
-      - uses: actions/github-script@v5
-        env:
-          PLAN: "${{ steps.terraform_plan.outputs.stdout }}"
-        with:
-          script: |
-            const output = `
-            \`\`\`\n
-              ${process.env.PLAN}
-            \`\`\`
-            `
-
-            github.rest.issues.createComment({
-              issue_number: context.issue.number,
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              body: output
-            })
+    uses: .github/workflows/terraform-plan.yml
+    with:
+      post_comment: true
+      environment: development
+      terraform_version: latest

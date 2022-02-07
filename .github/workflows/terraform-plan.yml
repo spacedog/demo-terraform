@@ -11,15 +11,18 @@ on:
         required: false
         type: string
         default: development
+      post_comment:
+        required: false
+        type: bool
+        default: false
     outputs:
       description: Terraform Plan
       value: ${{ jobs.terraform_plan.outputs.terraform_plan }}
 
-
 jobs:
   terraform-plan:
     runs-on: ubuntu-latest
-    environment: development
+    environment: ${{ inputs.environment }}
     outputs:
       terraform_plan: ${{ steps.plan.outputs.stdout }}
     steps:
@@ -46,3 +49,22 @@ jobs:
         id: plan
         run: terraform plan
         continue-on-error: true
+
+      - uses: actions/github-script@v5
+        if: ${{ inputs.post_comment }} == true
+        env:
+          PLAN: "${{ steps.plan.outputs.stdout }}"
+        with:
+          script: |
+            const output = `
+            \`\`\`\n
+              ${process.env.PLAN}
+            \`\`\`
+            `
+
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: output
+            })
