@@ -7,8 +7,17 @@ on:
       - master
 
 jobs:
-  terraform_plan:
+  terraform_plan_dev:
     uses: spacedog/github-workflows/.github/workflows/terraform-plan.yml@main
+    with:
+      post_comment: false
+      environment: development
+      terraform_version: latest
+      save_plan: true
+
+  terraform_deploy_dev:
+    uses: spacedog/github-workflows/.github/workflows/terraform-deploy.yml@main
+    needs: terraform_plan_dev
     with:
       post_comment: false
       environment: development
