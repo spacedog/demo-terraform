@@ -17,8 +17,9 @@ on:
         type: boolean
         default: false
     outputs:
-      description: Terraform Plan
-      value: ${{ jobs.terraform_plan.outputs.terraform_plan }}
+      terraform_plan:
+        description: Terraform Plan
+        value: ${{ jobs.terraform_plan.outputs.terraform_plan }}
 
 jobs:
   terraform-plan:
