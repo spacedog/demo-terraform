@@ -1,0 +1,48 @@
+name: Terraform Plan
+
+on:
+  workflow_call:
+    inputs:
+      terraform_version:
+        required: false
+        type: string
+        default: latest
+      environment:
+        required: false
+        type: string
+        default: development
+    outputs:
+      description: Terraform Plan
+      value: ${{ jobs.terraform_plan.outputs.terraform_plan }}
+
+
+jobs:
+  terraform-plan:
+    runs-on: ubuntu-latest
+    environment: development
+    outputs:
+      terraform_plan: ${{ steps.plan.outputs.stdout }}
+    steps:
+      - uses: actions/checkout@v2
+
+      - uses: hashicorp/setup-terraform@v1
+        with:
+            terraform_version: ${{ inputs.terraform_version }}
+
+      - name: Terraform fmt
+        id: fmt
+        run: terraform fmt -check
+        continue-on-error: true
+
+      - name: Terraform Init
+        id: init
+        run: terraform init
+
+      - name: Terraform Validate
+        id: validate
+        run: terraform validate
+
+      - name: Terraform Plan
+        id: plan
+        run: terraform plan
+        continue-on-error: true
