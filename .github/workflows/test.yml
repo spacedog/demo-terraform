@@ -1,0 +1,18 @@
+---
+name: Set github environment
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  set_github_env
+    name: Set github environment variables
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Set env
+        run: echo -e "env1=value1\nenv2=value2" >> $GITHUB_ENV
+      - name: Get environment
+        run: env ;; cat $GITHUB_ENV
