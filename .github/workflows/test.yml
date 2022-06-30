@@ -15,4 +15,6 @@ jobs:
       - name: Set env
         run: echo -e "env1=value1\nenv2=value2" >> $GITHUB_ENV
       - name: Get environment
-        run: env ;; cat $GITHUB_ENV
+        run: |
+          env
+          cat $GITHUB_ENV
