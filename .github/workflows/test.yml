@@ -7,7 +7,7 @@ on:
       - master
 
 jobs:
-  set_github_env
+  set_github_env:
     name: Set github environment variables
     runs-on: ubuntu-latest
     steps:
