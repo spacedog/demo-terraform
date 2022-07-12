@@ -17,4 +17,4 @@ jobs:
       - name: Get environment
         run: |
           env
-          echo $env1["dev"]
+          echo ${env1["dev"]}
