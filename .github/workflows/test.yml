@@ -13,7 +13,7 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - name: Set env
-        run: echo -e "env1=${{ secrets.env1 }}\nenv2=${{ secrets.env2}}" >> $GITHUB_ENV
+        run: echo -e "env1={\"dev\"=\"${{ secrets.env1 }}\"}\nenv2=${{ secrets.env2}}" >> $GITHUB_ENV
       - name: Get environment
         run: |
           env
