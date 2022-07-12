@@ -17,4 +17,4 @@ jobs:
       - name: Get environment
         run: |
           env
-          cat $GITHUB_ENV
+          echo $env1["dev"]
