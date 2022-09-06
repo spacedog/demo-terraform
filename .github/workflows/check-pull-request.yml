@@ -15,3 +15,6 @@ jobs:
       post_comment: true
       environment: development
       terraform_version: latest
+    secrets:
+        TF_VAR_secret1=${{ secrets.secret1 }}
+        TF_VAR_secret2={\"dev\"=\"${{ secrets.secret2 }}\"}
