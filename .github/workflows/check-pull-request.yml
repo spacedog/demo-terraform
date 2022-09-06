@@ -16,6 +16,8 @@ jobs:
       environment: development
       terraform_version: latest
     secrets:
+      aws_access_key_id: "tss.. this is a secret"
+      aws_secret_access_key: "tss.. this is a secret"
       extra_env: |
         TF_VAR_secret1=${{ secrets.secret1 }}
         TF_VAR_secret2={\"dev\"=\"${{ secrets.secret2 }}\"}
