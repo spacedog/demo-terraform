@@ -16,5 +16,6 @@ jobs:
       environment: development
       terraform_version: latest
     secrets:
+      extra_env: |
         TF_VAR_secret1=${{ secrets.secret1 }}
         TF_VAR_secret2={\"dev\"=\"${{ secrets.secret2 }}\"}
