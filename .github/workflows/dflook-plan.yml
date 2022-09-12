@@ -13,5 +13,14 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
 
-      - name: terraform plan
+      - name: terraform plan - dev
         uses: dflook/terraform-plan@v1
+        with:
+          label: development
+          workspace: dev
+
+      - name: terraform plan - prod
+        uses: dflook/terraform-plan@v1
+        with:
+          label: production
+          workspace: prod
