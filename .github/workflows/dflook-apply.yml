@@ -16,5 +16,14 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
 
-      - name: terraform apply
+      - name: terraform apply - dev
         uses: dflook/terraform-apply@v1
+        with:
+          label: development
+          workspace: dev
+
+      - name: terraform apply - prod
+        uses: dflook/terraform-apply@v1
+        with:
+          label: production
+          workspace: prod
