@@ -1,57 +1,57 @@
----
-name: Merge ot master
+# ---
+# name: Merge ot master
 
-on:
-  push:
-    branches:
-      - master
-      - main
+# on:
+#   push:
+#     branches:
+#       - master
+#       - main
 
-jobs:
-  # Dev
-  terraform_plan_dev:
-    uses: spacedog/github-workflows/.github/workflows/terraform-plan.yml@main
-    with:
-      post_comment: false
-      environment: development
-      terraform_version: latest
-      save_plan: true
+# jobs:
+#   # Dev
+#   terraform_plan_dev:
+#     uses: spacedog/github-workflows/.github/workflows/terraform-plan.yml@main
+#     with:
+#       post_comment: false
+#       environment: development
+#       terraform_version: latest
+#       save_plan: true
 
-  terraform_deploy_dev:
-    uses: spacedog/github-workflows/.github/workflows/terraform-deploy.yml@main
-    needs: terraform_plan_dev
-    with:
-      environment: development
-      terraform_version: latest
-  # Staging
-  terraform_plan_staging:
-    uses: spacedog/github-workflows/.github/workflows/terraform-plan.yml@main
-    with:
-      post_comment: false
-      environment: staging
-      terraform_version: latest
-      save_plan: true
-    needs: terraform_deploy_dev
+#   terraform_deploy_dev:
+#     uses: spacedog/github-workflows/.github/workflows/terraform-deploy.yml@main
+#     needs: terraform_plan_dev
+#     with:
+#       environment: development
+#       terraform_version: latest
+#   # Staging
+#   terraform_plan_staging:
+#     uses: spacedog/github-workflows/.github/workflows/terraform-plan.yml@main
+#     with:
+#       post_comment: false
+#       environment: staging
+#       terraform_version: latest
+#       save_plan: true
+#     needs: terraform_deploy_dev
 
-  terraform_deploy_staging:
-    uses: spacedog/github-workflows/.github/workflows/terraform-deploy.yml@main
-    needs: terraform_plan_staging
-    with:
-      environment: staging
-      terraform_version: latest
-  # Production
-  terraform_plan_production:
-    uses: spacedog/github-workflows/.github/workflows/terraform-plan.yml@main
-    with:
-      post_comment: false
-      environment: production
-      terraform_version: latest
-      save_plan: true
-    needs: terraform_deploy_staging
+#   terraform_deploy_staging:
+#     uses: spacedog/github-workflows/.github/workflows/terraform-deploy.yml@main
+#     needs: terraform_plan_staging
+#     with:
+#       environment: staging
+#       terraform_version: latest
+#   # Production
+#   terraform_plan_production:
+#     uses: spacedog/github-workflows/.github/workflows/terraform-plan.yml@main
+#     with:
+#       post_comment: false
+#       environment: production
+#       terraform_version: latest
+#       save_plan: true
+#     needs: terraform_deploy_staging
 
-  terraform_deploy_production:
-    uses: spacedog/github-workflows/.github/workflows/terraform-deploy.yml@main
-    needs: terraform_plan_production
-    with:
-      environment: production
-      terraform_version: latest
+#   terraform_deploy_production:
+#     uses: spacedog/github-workflows/.github/workflows/terraform-deploy.yml@main
+#     needs: terraform_plan_production
+#     with:
+#       environment: production
+#       terraform_version: latest
