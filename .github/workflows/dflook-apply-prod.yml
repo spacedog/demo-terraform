@@ -1,4 +1,4 @@
-name: Apply plan
+name: "[PROD] Apply plan"
 
 on:
   push:
@@ -9,7 +9,7 @@ on:
 jobs:
   plan:
     runs-on: ubuntu-latest
-    name: Apply terraform plan
+    name: "[PROD] Apply terraform plan"
     env:
       GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     steps:
@@ -18,3 +18,6 @@ jobs:
 
       - name: terraform apply
         uses: dflook/terraform-apply@v1
+        with:
+          label: production
+          workspace: prod

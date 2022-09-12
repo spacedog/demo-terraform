@@ -1,4 +1,4 @@
-name: Create terraform plan
+name: "[DEV] Create terraform plan"
 
 on:
   - pull_request
@@ -6,7 +6,7 @@ on:
 jobs:
   plan:
     runs-on: ubuntu-latest
-    name: Create a plan for terraform configuration
+    name:  "[DEV] Create a plan for terraform configuration"
     env:
       GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     steps:
@@ -15,3 +15,6 @@ jobs:
 
       - name: terraform plan
         uses: dflook/terraform-plan@v1
+        with:
+          label: development
+          workspace: dev
