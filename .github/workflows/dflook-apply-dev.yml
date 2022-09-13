@@ -9,7 +9,7 @@ on:
 jobs:
   plan:
     runs-on: ubuntu-latest
-    name: "[DEV] Apply terraform plan"
+    name: "Apply terraform plan"
     env:
       GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     steps:

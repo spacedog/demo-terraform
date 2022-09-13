@@ -6,7 +6,7 @@ on:
 jobs:
   plan:
     runs-on: ubuntu-latest
-    name:  "[DEV] Create a plan for terraform configuration"
+    name:  "Create a plan for terraform configuration"
     env:
       GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     steps:
