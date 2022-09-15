@@ -1,0 +1,37 @@
+name: "Terraform Apply"
+
+on:
+  push:
+    branches:
+      - master
+      - main
+
+jobs:
+  plan_dev:
+    runs-on: ubuntu-latest
+    name: "Apply for Dev"
+    env:
+      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: terraform apply
+        uses: dflook/terraform-apply@v1
+        with:
+          label: development
+          workspace: dev
+  plan_prod:
+    runs-on: ubuntu-latest
+    name: "Apply for Prod"
+    env:
+      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: terraform apply
+        uses: dflook/terraform-apply@v1
+        with:
+          label: production
+          workspace: prod
