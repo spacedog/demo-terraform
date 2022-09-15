@@ -25,7 +25,7 @@ jobs:
   apply_prod:
     runs-on: ubuntu-latest
     name: "Apply for Prod"
-    need: apply_dev
+    needs: apply_dev
     environment: production
     env:
       GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
