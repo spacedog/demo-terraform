@@ -7,9 +7,10 @@ on:
       - main
 
 jobs:
-  plan_dev:
+  apply_dev:
     runs-on: ubuntu-latest
     name: "Apply for Dev"
+    environment: development
     env:
       GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     steps:
@@ -21,9 +22,11 @@ jobs:
         with:
           label: development
           workspace: dev
-  plan_prod:
+  apply_prod:
     runs-on: ubuntu-latest
     name: "Apply for Prod"
+    need: apply_dev
+    environment: production
     env:
       GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     steps:
