@@ -1,9 +1,10 @@
 name: Release
 
 on:
-  release:
-    types:
-      - published
+  push:
+    tags:
+      - v**
+
 jobs:
   plan_prod:
     runs-on: ubuntu-latest
@@ -24,7 +25,7 @@ jobs:
       - name: Upload Plan To Artifacts
         uses: actions/upload-artifact@v3
         with:
-          name: ${{github.event.number}}-${{workspace-id}}.plan.out
+          name: ${{github.event.number}}-prod.plan.out
           path: steps.plan.outputs.json_plan_path
   apply_prod:
     runs-on: ubuntu-latest
@@ -39,7 +40,7 @@ jobs:
       - name: Download terraform.tfplan
         uses: actions/download-artifact@v3
         with:
-          name:  ${{github.event.number}}-${{workspace-id}}.plan.out
+          name:  ${{github.event.number}}-prod.plan.out
       - name: terraform apply
         uses: dflook/terraform-apply@v1
         with:
