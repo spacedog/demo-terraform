@@ -22,11 +22,13 @@ jobs:
         with:
           label: production
           workspace: prod
+      - name: Debug
+        run: ls -la /tmp
       - name: Upload Plan To Artifacts
         uses: actions/upload-artifact@v3
         with:
-          name: plan.out
-          path: /tmp
+          name: plan
+          path: /tmp/plan.out
   apply_prod:
     runs-on: ubuntu-latest
     name: "Apply for Prod"
@@ -40,7 +42,7 @@ jobs:
       - name: Download terraform.tfplan
         uses: actions/download-artifact@v3
         with:
-          name:  plan.out
+          name: plan
           path: /tmp
       - name: terraform apply
         uses: dflook/terraform-apply@v1
