@@ -26,7 +26,7 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: plan.out
-          path: /tmp/plan.out
+          path: /tmp
   apply_prod:
     runs-on: ubuntu-latest
     name: "Apply for Prod"
@@ -41,7 +41,7 @@ jobs:
         uses: actions/download-artifact@v3
         with:
           name:  plan.out
-          path: /tmp/plan.out
+          path: /tmp
       - name: terraform apply
         uses: dflook/terraform-apply@v1
         with:
