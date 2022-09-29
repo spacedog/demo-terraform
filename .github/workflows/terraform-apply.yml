@@ -22,3 +22,18 @@ jobs:
         with:
           label: development
           workspace: dev
+  apply_prod:
+    runs-on: ubuntu-latest
+    name: "Apply for Prod"
+    environment: produciton
+    env:
+      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: terraform apply
+        uses: dflook/terraform-apply@v1
+        with:
+          label: production
+          workspace: prod

@@ -19,3 +19,18 @@ jobs:
         with:
           label: development
           workspace: dev
+  plan_prod:
+    runs-on: ubuntu-latest
+    name:  Create Plan for Prod
+    environment: development
+    env:
+      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: terraform plan
+        uses: dflook/terraform-plan@v1
+        with:
+          label: production
+          workspace: prod
