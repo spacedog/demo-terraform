@@ -1,0 +1,32 @@
+---
+name: Autocommit test
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  autocommit-test:
+    name: Auto commit test
+    runs-on: ubuntu-latest
+    if: "!contains(github.event.head_commit.message, '[ci skip]')"
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: generate test files
+        run: |
+          mkdir -p ./db
+          echo $(date --iso) > db/schema.sql
+
+      - name: Commit generated schema file
+        uses: stefanzweifel/git-auto-commit-action@v4
+        with:
+          commit_message: "Update schema.sql [ci skip]"
+          file_pattern: ./db/schema.sql
+          commit_options: '--no-verify --signoff'
+          commit_user_name: gha-action-bot
+          commit_user_email: youremail@example.com
+          commit_branch: main
+          commit_allow_empty: true
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
