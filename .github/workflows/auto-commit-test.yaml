@@ -3,7 +3,7 @@ name: Autocommit test
 on:
   push:
     branches:
-      - main
+      - master
 
 jobs:
   autocommit-test:
